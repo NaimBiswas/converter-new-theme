@@ -116,7 +116,7 @@ export const HeroDropzone: React.FC<HeroDropzoneProps> = ({ onFilesSelected }) =
           CSV
         </span>
         <span className="text-[#424754] dark:text-[#94a3b8] text-xs font-semibold px-2 py-1">
-          +50 more
+          +30 more
         </span>
       </div>
     </section>
