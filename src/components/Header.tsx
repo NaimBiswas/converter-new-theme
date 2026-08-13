@@ -19,8 +19,8 @@ export const Header: React.FC<HeaderProps> = ({
   const navItems: { path: string; label: string; icon: string }[] = [
     { path: '/', label: 'Converter Workspace', icon: 'published_with_changes' },
     { path: '/tools', label: 'Tools Directory', icon: 'grid_view' },
-    { path: '/api', label: 'Developer API', icon: 'terminal' },
-    { path: '/pricing', label: 'Pricing', icon: 'workspace_premium' },
+    // { path: '/api', label: 'Developer API', icon: 'terminal' },
+    // { path: '/pricing', label: 'Pricing', icon: 'workspace_premium' },
     { path: '/docs', label: 'Docs & Security', icon: 'shield' },
   ];
 

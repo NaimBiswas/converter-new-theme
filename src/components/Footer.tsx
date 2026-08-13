@@ -65,7 +65,7 @@ export const Footer: React.FC = () => {
                 <span className="material-symbols-outlined text-lg">tag</span>
               </a>
               <a
-                href="mailto:support@dataconverter.app"
+                href="mailto:nayeembiswas2@gmail.com"
                 aria-label="Email Support"
                 className="w-8 h-8 rounded-full bg-white dark:bg-[#161f30] border border-[#e1e3e4] dark:border-[#262c3a] text-[#424754] dark:text-[#94a3b8] hover:text-[#0058be] dark:hover:text-[#38bdf8] flex items-center justify-center transition-all hover:scale-105"
               >
@@ -114,16 +114,16 @@ export const Footer: React.FC = () => {
               Developers
             </h4>
             <ul className="space-y-2 text-xs text-[#424754] dark:text-[#94a3b8]">
-              <li>
+              {/* <li>
                 <Link to="/api" onClick={scrollToTop} className="hover:text-[#0058be] dark:hover:text-[#38bdf8] transition-colors">
                   Developer REST API
                 </Link>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <Link to="/pricing" onClick={scrollToTop} className="hover:text-[#0058be] dark:hover:text-[#38bdf8] transition-colors">
                   API Plans &amp; Pricing
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link to="/docs" onClick={scrollToTop} className="hover:text-[#0058be] dark:hover:text-[#38bdf8] transition-colors">
                   Documentation &amp; Specs
@@ -169,7 +169,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Developer API CTA Ribbon */}
-        <div className="my-8 bg-gradient-to-r from-[#d8e2ff] to-[#e8f0fe] dark:from-[#162032] dark:to-[#1a263d] rounded-2xl p-5 border border-[#c1d3fe] dark:border-[#26354f] flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* <div className="my-8 bg-gradient-to-r from-[#d8e2ff] to-[#e8f0fe] dark:from-[#162032] dark:to-[#1a263d] rounded-2xl p-5 border border-[#c1d3fe] dark:border-[#26354f] flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <span className="material-symbols-outlined text-2xl text-[#0058be] dark:text-[#38bdf8]">
               terminal
@@ -191,7 +191,7 @@ export const Footer: React.FC = () => {
             Explore REST API
             <span className="material-symbols-outlined text-sm">arrow_forward</span>
           </Link>
-        </div>
+        </div> */}
 
         {/* Bottom Bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 text-xs text-[#424754] dark:text-[#94a3b8]">

@@ -51,13 +51,13 @@ export const HelpPage: React.FC<{ onNavigateToContact?: () => void; onNavigateTo
       answer:
         'Yes! Simply drag and drop multiple files into the workspace dropzone. You can set individual output target formats for each file or click "Convert All Files" for fast simultaneous processing.',
     },
-    {
-      id: 'faq-6',
-      category: 'api',
-      question: 'How do I get a Developer API Key?',
-      answer:
-        'You can generate an API key instantly in the Developer API tab. Free accounts include 1,000 monthly conversion calls, while Pro plans include up to 50,000 requests.',
-    },
+    // {
+    //   id: 'faq-6',
+    //   category: 'api',
+    //   question: 'How do I get a Developer API Key?',
+    //   answer:
+    //     'You can generate an API key instantly in the Developer API tab. Free accounts include 1,000 monthly conversion calls, while Pro plans include up to 50,000 requests.',
+    // },
     {
       id: 'faq-7',
       category: 'formats',
@@ -79,7 +79,7 @@ export const HelpPage: React.FC<{ onNavigateToContact?: () => void; onNavigateTo
     { id: 'general', label: 'Getting Started', icon: 'rocket_launch' },
     { id: 'formats', label: 'Supported Formats', icon: 'grid_view' },
     { id: 'troubleshooting', label: 'Troubleshooting', icon: 'build' },
-    { id: 'api', label: 'Developer API', icon: 'terminal' },
+    // { id: 'api', label: 'Developer API', icon: 'terminal' },
   ];
 
   const filteredFaqs = faqs.filter((faq) => {
@@ -212,7 +212,7 @@ export const HelpPage: React.FC<{ onNavigateToContact?: () => void; onNavigateTo
           </p>
         </div>
         <div className="flex gap-3 shrink-0">
-          {onNavigateToApi && (
+          {/* {onNavigateToApi && (
             <button
               onClick={onNavigateToApi}
               className="bg-white/10 hover:bg-white/20 text-white text-xs font-bold px-4 py-2.5 rounded-full backdrop-blur-xs transition-all cursor-pointer flex items-center gap-1.5"
@@ -220,7 +220,7 @@ export const HelpPage: React.FC<{ onNavigateToContact?: () => void; onNavigateTo
               <span className="material-symbols-outlined text-base">terminal</span>
               API Docs
             </button>
-          )}
+          )} */}
           {onNavigateToContact && (
             <button
               onClick={onNavigateToContact}

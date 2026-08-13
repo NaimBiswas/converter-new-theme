@@ -48,10 +48,10 @@ export const ContactPage: React.FC = () => {
               Reach our support engineers directly for technical issues or enterprise billing.
             </p>
             <a
-              href="mailto:support@dataconverter.app"
+              href="mailto:nayeembiswas2@gmail.com"
               className="text-xs font-bold text-[#0058be] dark:text-[#38bdf8] hover:underline"
             >
-              support@dataconverter.app
+              nayeembiswas2@gmail.com
             </a>
           </div>
 
@@ -72,8 +72,8 @@ export const ContactPage: React.FC = () => {
             </div>
             <h3 className="text-base font-bold text-[#191c1d] dark:text-white mb-1 font-heading">Global Support</h3>
             <p className="text-xs text-[#424754] dark:text-[#94a3b8] leading-relaxed">
-              Data Converter Platform Inc.<br />
-              San Francisco, CA • Worldwide Remote Support
+              Nk Software Pvt. Ltd.<br />
+              Worldwide Remote Support
             </p>
           </div>
         </div>
@@ -154,8 +154,8 @@ export const ContactPage: React.FC = () => {
                     >
                       <option value="General Inquiry">General Inquiry</option>
                       <option value="Technical Support">Technical Support</option>
-                      <option value="API Integration">API Integration</option>
-                      <option value="Billing & Enterprise">Billing &amp; Enterprise</option>
+                      {/* <option value="API Integration">API Integration</option>
+                      <option value="Billing & Enterprise">Billing &amp; Enterprise</option> */}
                     </select>
                   </div>
 

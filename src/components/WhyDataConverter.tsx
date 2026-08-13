@@ -31,13 +31,13 @@ export const WhyDataConverter: React.FC = () => {
       badge: 'All-in-One Suite',
       badgeColorClass: 'bg-[#e1e0ff] text-[#2f2ebe] dark:bg-[#312e81] dark:text-[#a5b4fc]',
     },
-    {
-      icon: 'terminal',
-      title: 'Developer API & Automation',
-      description: 'Easily integrate data conversion channels directly into your CI/CD pipelines, backend microservices, or custom scripts.',
-      badge: 'REST & CLI Support',
-      badgeColorClass: 'bg-[#ffdad6] text-[#93000a] dark:bg-[#7f1d1d] dark:text-[#fca5a5]',
-    },
+    // {
+    //   icon: 'terminal',
+    //   title: 'Developer API & Automation',
+    //   description: 'Easily integrate data conversion channels directly into your CI/CD pipelines, backend microservices, or custom scripts.',
+    //   badge: 'REST & CLI Support',
+    //   badgeColorClass: 'bg-[#ffdad6] text-[#93000a] dark:bg-[#7f1d1d] dark:text-[#fca5a5]',
+    // },
   ];
 
   return (
