@@ -1,6 +1,6 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Analytics } from '@vercel/analytics/react';
-import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { applyPageMeta, PAGE_META } from './utils/meta';
 import { Header } from './components/Header';
 import { HeroDropzone } from './components/HeroDropzone';
@@ -25,6 +25,7 @@ const PrivacyPage = lazy(() => import('./components/pages/PrivacyPage').then((m)
 const TermsPage = lazy(() => import('./components/pages/TermsPage').then((m) => ({ default: m.TermsPage })));
 const HelpPage = lazy(() => import('./components/pages/HelpPage').then((m) => ({ default: m.HelpPage })));
 const ContactPage = lazy(() => import('./components/pages/ContactPage').then((m) => ({ default: m.ContactPage })));
+const NotFoundPage = lazy(() => import('./components/pages/NotFoundPage').then((m) => ({ default: m.NotFoundPage })));
 
 import { POPULAR_TOOLS } from './data/tools';
 import { ConversionTool, UploadedFileItem } from './types';
@@ -376,7 +377,7 @@ export default function App() {
               }
             />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </main>
