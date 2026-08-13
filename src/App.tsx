@@ -12,6 +12,8 @@ import { PricingModal } from './components/PricingModal';
 import { ApiModal } from './components/ApiModal';
 import { AuthModal } from './components/AuthModal';
 import { Footer } from './components/Footer';
+import { FooterAd } from './components/FooterAd';
+import { SideAds } from './components/SideAds';
 import { WhyDataConverter } from './components/WhyDataConverter';
 
 // Pages
@@ -296,7 +298,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0b0e14] text-[#191c1d] dark:text-[#e1e3e4] flex flex-col font-sans antialiased transition-colors duration-200">
+    <div className="min-h-screen relative bg-[#f8f9fa] dark:bg-[#0b0e14] text-[#191c1d] dark:text-[#e1e3e4] flex flex-col font-sans antialiased transition-colors duration-200">
       <ScrollToTop />
 
       {/* Toast Notification Banner */}
@@ -403,8 +405,14 @@ export default function App() {
         onSuccess={(email) => showToast(`Signed in as ${email}`)}
       />
 
+      {/* Side Ads */}
+      <SideAds />
+
       {/* Why Data Converter Section */}
       <WhyDataConverter />
+
+      {/* Footer Ad */}
+      <FooterAd />
 
       {/* Footer */}
       <Footer />
