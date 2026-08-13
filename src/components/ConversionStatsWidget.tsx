@@ -128,6 +128,7 @@ export const ConversionStatsWidget: React.FC = () => {
                 }
               />
               <Tooltip
+                cursor={false}
                 content={({ active, payload }) => {
                   if (active && payload && payload.length) {
                     const data = payload[0].payload as CategoryData;
