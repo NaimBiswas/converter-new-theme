@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { Header } from './components/Header';
 import { HeroDropzone } from './components/HeroDropzone';
@@ -385,6 +386,8 @@ export default function App() {
 
       {/* Footer */}
       <Footer />
+
+      <Analytics />
     </div>
   );
 }
