@@ -1,5 +1,6 @@
 import React from 'react';
 import { ConversionTool } from '../types';
+import { ConversionStatsWidget } from './ConversionStatsWidget';
 
 interface PopularToolsProps {
   tools: ConversionTool[];
@@ -13,15 +14,18 @@ export const PopularTools: React.FC<PopularToolsProps> = ({
   onSelectTool,
 }) => {
   return (
-    <section className="bg-[#f3f4f5] dark:bg-[#12161f] py-20 px-4 md:px-8 w-full border-t border-[#e1e3e4] dark:border-[#262c3a] transition-colors duration-200">
+    <section className="bg-[#f3f4f5] dark:bg-[#12161f] py-16 px-4 md:px-8 w-full border-t border-[#e1e3e4] dark:border-[#262c3a] transition-colors duration-200">
       <div className="max-w-[1200px] mx-auto">
+        {/* Data Visualization Metrics & Bar Chart */}
+        <ConversionStatsWidget />
+
         {/* Section Header */}
-        <div className="flex justify-between items-end mb-10">
+        <div className="flex justify-between items-end mb-8">
           <div>
             <h2 className="text-3xl font-bold text-[#191c1d] dark:text-white mb-1 font-heading tracking-tight">
               Popular Tools
             </h2>
-            <p className="text-lg text-[#424754] dark:text-[#94a3b8]">
+            <p className="text-base text-[#424754] dark:text-[#94a3b8]">
               The most frequently used conversion paths.
             </p>
           </div>

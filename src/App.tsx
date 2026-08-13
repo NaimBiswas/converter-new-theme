@@ -9,6 +9,7 @@ import { PricingModal } from './components/PricingModal';
 import { ApiModal } from './components/ApiModal';
 import { AuthModal } from './components/AuthModal';
 import { Footer } from './components/Footer';
+import { WhyDataConverter } from './components/WhyDataConverter';
 
 // Pages
 import { ToolsPage } from './components/pages/ToolsPage';
@@ -350,6 +351,9 @@ export default function App() {
         onClose={() => setIsAuthOpen(false)}
         onSuccess={(email) => showToast(`Signed in as ${email}`)}
       />
+
+      {/* Why Data Converter Section */}
+      <WhyDataConverter />
 
       {/* Footer */}
       <Footer
