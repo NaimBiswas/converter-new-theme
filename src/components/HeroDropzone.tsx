@@ -47,10 +47,10 @@ export const HeroDropzone: React.FC<HeroDropzoneProps> = ({ onFilesSelected }) =
       />
 
       {/* Hero Headings */}
-      <h1 className="text-4xl md:text-6xl font-extrabold mb-3 max-w-3xl text-[#191c1d] tracking-tight font-heading leading-tight">
-        Convert Files, <span className="text-[#0058be]">Save Time.</span>
+      <h1 className="text-4xl md:text-6xl font-extrabold mb-3 max-w-3xl text-[#191c1d] dark:text-white tracking-tight font-heading leading-tight">
+        Convert Files, <span className="text-[#0058be] dark:text-[#38bdf8]">Save Time.</span>
       </h1>
-      <p className="text-lg md:text-xl text-[#424754] max-w-2xl mb-10 leading-relaxed font-normal">
+      <p className="text-lg md:text-xl text-[#424754] dark:text-[#94a3b8] max-w-2xl mb-10 leading-relaxed font-normal">
         The easiest way to transform your documents, data, and media. No fuss, just perfect conversions every time.
       </p>
 
@@ -60,25 +60,25 @@ export const HeroDropzone: React.FC<HeroDropzoneProps> = ({ onFilesSelected }) =
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
-        className={`w-full max-w-2xl bg-white rounded-[24px] p-8 border-2 border-dashed transition-all duration-300 flex flex-col items-center justify-center gap-6 soft-shadow relative overflow-hidden group cursor-pointer min-h-[300px] ${
+        className={`w-full max-w-2xl bg-white dark:bg-[#161f30] rounded-[24px] p-8 border-2 border-dashed transition-all duration-300 flex flex-col items-center justify-center gap-6 soft-shadow relative overflow-hidden group cursor-pointer min-h-[300px] ${
           isDragging
-            ? 'bg-[#f0fdf4] border-[#6cf8bb] scale-[1.01]'
-            : 'border-[#adc6ff] hover:bg-[#f5f8ff] hover:border-[#0058be]'
+            ? 'bg-[#f0fdf4] dark:bg-[#064e3b]/30 border-[#6cf8bb] scale-[1.01]'
+            : 'border-[#adc6ff] dark:border-[#334155] hover:bg-[#f5f8ff] dark:hover:bg-[#1e293b] hover:border-[#0058be] dark:hover:border-[#38bdf8]'
         }`}
       >
         {/* Plus Icon Circle */}
-        <div className="bg-[#d8e2ff] w-16 h-16 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm">
-          <span className="material-symbols-outlined text-[#0058be] text-3xl font-bold">
+        <div className="bg-[#d8e2ff] dark:bg-[#1e293b] w-16 h-16 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm">
+          <span className="material-symbols-outlined text-[#0058be] dark:text-[#38bdf8] text-3xl font-bold">
             add
           </span>
         </div>
 
         {/* Text Instructions */}
         <div className="text-center">
-          <p className="text-xl font-bold text-[#191c1d] mb-1 font-heading">
+          <p className="text-xl font-bold text-[#191c1d] dark:text-white mb-1 font-heading">
             Drag &amp; drop files here
           </p>
-          <p className="text-base text-[#424754]">
+          <p className="text-base text-[#424754] dark:text-[#94a3b8]">
             or browse your device
           </p>
         </div>
@@ -90,32 +90,32 @@ export const HeroDropzone: React.FC<HeroDropzoneProps> = ({ onFilesSelected }) =
             e.stopPropagation();
             fileInputRef.current?.click();
           }}
-          className="bg-[#0058be] text-white text-sm font-semibold px-8 py-3 rounded-full hover:bg-[#2170e4] active:scale-95 transition-all shadow-md flex items-center gap-2 mt-1 z-10 cursor-pointer"
+          className="bg-[#0058be] dark:bg-[#0284c7] text-white text-sm font-semibold px-8 py-3 rounded-full hover:bg-[#2170e4] dark:hover:bg-[#0369a1] active:scale-95 transition-all shadow-md flex items-center gap-2 mt-1 z-10 cursor-pointer"
         >
           <span className="material-symbols-outlined text-lg">upload</span>
           Upload Files
         </button>
 
         {/* Decorative Background Glow Elements */}
-        <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#6cf8bb] opacity-25 rounded-full blur-2xl pointer-events-none"></div>
-        <div className="absolute -top-10 -left-10 w-40 h-40 bg-[#2170e4] opacity-15 rounded-full blur-2xl pointer-events-none"></div>
+        <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#6cf8bb] opacity-25 dark:opacity-10 rounded-full blur-2xl pointer-events-none"></div>
+        <div className="absolute -top-10 -left-10 w-40 h-40 bg-[#2170e4] opacity-15 dark:opacity-20 rounded-full blur-2xl pointer-events-none"></div>
       </div>
 
       {/* Format Tags */}
       <div className="flex gap-2.5 mt-6 flex-wrap justify-center items-center">
-        <span className="bg-[#d8e2ff] text-[#004395] text-xs font-semibold px-3 py-1 rounded-full border border-[#adc6ff]/50">
+        <span className="bg-[#d8e2ff] dark:bg-[#1e293b] text-[#004395] dark:text-[#7dd3fc] text-xs font-semibold px-3 py-1 rounded-full border border-[#adc6ff]/50 dark:border-[#334155]">
           PDF
         </span>
-        <span className="bg-[#d8e2ff] text-[#004395] text-xs font-semibold px-3 py-1 rounded-full border border-[#adc6ff]/50">
+        <span className="bg-[#d8e2ff] dark:bg-[#1e293b] text-[#004395] dark:text-[#7dd3fc] text-xs font-semibold px-3 py-1 rounded-full border border-[#adc6ff]/50 dark:border-[#334155]">
           JPG
         </span>
-        <span className="bg-[#d8e2ff] text-[#004395] text-xs font-semibold px-3 py-1 rounded-full border border-[#adc6ff]/50">
+        <span className="bg-[#d8e2ff] dark:bg-[#1e293b] text-[#004395] dark:text-[#7dd3fc] text-xs font-semibold px-3 py-1 rounded-full border border-[#adc6ff]/50 dark:border-[#334155]">
           DOCX
         </span>
-        <span className="bg-[#d8e2ff] text-[#004395] text-xs font-semibold px-3 py-1 rounded-full border border-[#adc6ff]/50">
+        <span className="bg-[#d8e2ff] dark:bg-[#1e293b] text-[#004395] dark:text-[#7dd3fc] text-xs font-semibold px-3 py-1 rounded-full border border-[#adc6ff]/50 dark:border-[#334155]">
           CSV
         </span>
-        <span className="text-[#424754] text-xs font-semibold px-2 py-1">
+        <span className="text-[#424754] dark:text-[#94a3b8] text-xs font-semibold px-2 py-1">
           +50 more
         </span>
       </div>

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Header } from './components/Header';
+import React, { useState, useEffect } from 'react';
+import { Header, PageView } from './components/Header';
 import { HeroDropzone } from './components/HeroDropzone';
 import { ActiveConverter } from './components/ActiveConverter';
 import { HowItWorks } from './components/HowItWorks';
@@ -9,17 +9,44 @@ import { PricingModal } from './components/PricingModal';
 import { ApiModal } from './components/ApiModal';
 import { AuthModal } from './components/AuthModal';
 import { Footer } from './components/Footer';
+
+// Pages
+import { ToolsPage } from './components/pages/ToolsPage';
+import { ApiPage } from './components/pages/ApiPage';
+import { PricingPage } from './components/pages/PricingPage';
+import { DocsPage } from './components/pages/DocsPage';
+
 import { POPULAR_TOOLS } from './data/tools';
 import { ConversionTool, UploadedFileItem } from './types';
 import { convertSingleFile, getAvailableTargetFormats } from './utils/converter';
 
 export default function App() {
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || saved === 'light') return saved;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
+
+  const [activePage, setActivePage] = useState<PageView>('converter');
   const [files, setFiles] = useState<UploadedFileItem[]>([]);
   const [isToolsOpen, setIsToolsOpen] = useState(false);
   const [isPricingOpen, setIsPricingOpen] = useState(false);
   const [isApiOpen, setIsApiOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -55,6 +82,7 @@ export default function App() {
 
     setFiles((prev) => [...prev, ...newItems]);
     showToast(`Added ${newItems.length} file(s) to workplace`);
+    setActivePage('converter');
 
     // Smooth scroll down to workspace
     setTimeout(() => {
@@ -138,12 +166,12 @@ export default function App() {
   // Launch popular tool preset with sample file if no file uploaded
   const handleSelectTool = (tool: ConversionTool) => {
     let filename = `sample_dataset.${tool.fromFormat.toLowerCase()}`;
-    let content = 'col1,col2,col3\nval1,val2,val3\nhello,world,convertflow';
+    let content = 'col1,col2,col3\nval1,val2,val3\nhello,world,dataconverter';
     let type = 'text/csv';
 
     if (tool.id === 'pdf-to-word' || tool.fromFormat === 'PDF') {
       filename = 'sample_document.pdf';
-      content = 'Sample PDF document content for ConvertFlow transformation.';
+      content = 'Sample PDF document content for Data Converter transformation.';
       type = 'application/pdf';
     } else if (tool.fromFormat === 'JSON') {
       filename = 'data_export.json';
@@ -160,8 +188,8 @@ export default function App() {
         ctx.fillStyle = '#0058be';
         ctx.fillRect(0, 0, 300, 300);
         ctx.fillStyle = '#ffffff';
-        ctx.font = '24px sans-serif';
-        ctx.fillText('ConvertFlow', 80, 150);
+        ctx.font = '22px sans-serif';
+        ctx.fillText('Data Converter', 70, 150);
       }
       canvas.toBlob((blob) => {
         if (blob) {
@@ -178,15 +206,20 @@ export default function App() {
   };
 
   const scrollToHowItWorks = () => {
-    const el = document.getElementById('how-it-works');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (activePage !== 'converter') {
+      setActivePage('converter');
+    }
+    setTimeout(() => {
+      const el = document.getElementById('how-it-works');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] text-[#191c1d] flex flex-col font-sans antialiased">
+    <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0b0e14] text-[#191c1d] dark:text-[#e1e3e4] flex flex-col font-sans antialiased transition-colors duration-200">
       {/* Toast Notification Banner */}
       {toastMessage && (
-        <div className="fixed top-24 right-6 z-50 bg-[#191c1d] text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4">
+        <div className="fixed top-24 right-6 z-50 bg-[#191c1d] dark:bg-[#1e293b] text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4 border border-transparent dark:border-[#334155]">
           <span className="material-symbols-outlined text-[#6cf8bb]">check_circle</span>
           <span className="text-xs font-semibold">{toastMessage}</span>
         </div>
@@ -194,51 +227,63 @@ export default function App() {
 
       {/* Header */}
       <Header
-        onOpenToolsModal={() => setIsToolsOpen(true)}
-        onOpenPricingModal={() => setIsPricingOpen(true)}
-        onOpenApiModal={() => setIsApiOpen(true)}
+        theme={theme}
+        activePage={activePage}
+        onSelectPage={setActivePage}
+        onToggleTheme={toggleTheme}
         onOpenAuthModal={() => setIsAuthOpen(true)}
-        onScrollToHowItWorks={scrollToHowItWorks}
       />
 
-      {/* Main Content */}
+      {/* Main Content Area based on activePage */}
       <main className="flex-1">
-        {/* Hero & Upload Dropzone */}
-        <HeroDropzone onFilesSelected={handleFilesAdded} />
+        {activePage === 'converter' && (
+          <>
+            {/* Hero & Upload Dropzone */}
+            <HeroDropzone onFilesSelected={handleFilesAdded} />
 
-        {/* Active Conversion Workplace */}
-        <div id="conversion-workplace">
-          <ActiveConverter
-            files={files}
-            onUpdateTargetFormat={handleUpdateTargetFormat}
-            onConvertFile={handleConvertFile}
-            onConvertAll={handleConvertAll}
-            onRemoveFile={handleRemoveFile}
-            onAddMore={() => {
-              const input = document.createElement('input');
-              input.type = 'file';
-              input.multiple = true;
-              input.onchange = (e: any) => {
-                if (e.target.files) handleFilesAdded(e.target.files);
-              };
-              input.click();
-            }}
-            onClearAll={handleClearAll}
-          />
-        </div>
+            {/* Active Conversion Workplace */}
+            <div id="conversion-workplace">
+              <ActiveConverter
+                files={files}
+                onUpdateTargetFormat={handleUpdateTargetFormat}
+                onConvertFile={handleConvertFile}
+                onConvertAll={handleConvertAll}
+                onRemoveFile={handleRemoveFile}
+                onAddMore={() => {
+                  const input = document.createElement('input');
+                  input.type = 'file';
+                  input.multiple = true;
+                  input.onchange = (e: any) => {
+                    if (e.target.files) handleFilesAdded(e.target.files);
+                  };
+                  input.click();
+                }}
+                onClearAll={handleClearAll}
+              />
+            </div>
 
-        {/* How It Works Section */}
-        <HowItWorks />
+            {/* How It Works Section */}
+            <HowItWorks />
 
-        {/* Popular Tools Section */}
-        <PopularTools
-          tools={POPULAR_TOOLS}
-          onOpenToolsModal={() => setIsToolsOpen(true)}
-          onSelectTool={handleSelectTool}
-        />
+            {/* Popular Tools Section */}
+            <PopularTools
+              tools={POPULAR_TOOLS}
+              onOpenToolsModal={() => setActivePage('tools')}
+              onSelectTool={handleSelectTool}
+            />
+          </>
+        )}
+
+        {activePage === 'tools' && <ToolsPage onSelectTool={handleSelectTool} />}
+
+        {activePage === 'api' && <ApiPage />}
+
+        {activePage === 'pricing' && <PricingPage />}
+
+        {activePage === 'docs' && <DocsPage />}
       </main>
 
-      {/* Modals */}
+      {/* Quick Modals */}
       <ToolsModal
         isOpen={isToolsOpen}
         onClose={() => setIsToolsOpen(false)}
@@ -264,9 +309,9 @@ export default function App() {
 
       {/* Footer */}
       <Footer
-        onOpenToolsModal={() => setIsToolsOpen(true)}
-        onOpenPricingModal={() => setIsPricingOpen(true)}
-        onOpenApiModal={() => setIsApiOpen(true)}
+        onOpenToolsModal={() => setActivePage('tools')}
+        onOpenPricingModal={() => setActivePage('pricing')}
+        onOpenApiModal={() => setActivePage('api')}
         onScrollToHowItWorks={scrollToHowItWorks}
       />
     </div>

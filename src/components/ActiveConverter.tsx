@@ -31,19 +31,19 @@ export const ActiveConverter: React.FC<ActiveConverterProps> = ({
   return (
     <section className="py-8 px-4 md:px-8 max-w-[1200px] mx-auto w-full">
       {/* Workspace Header Bar */}
-      <div className="bg-white rounded-2xl p-6 soft-shadow border border-[#e1e3e4] mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div className="bg-white dark:bg-[#161f30] rounded-2xl p-6 soft-shadow border border-[#e1e3e4] dark:border-[#262c3a] mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition-colors">
         <div>
-          <h2 className="text-2xl font-bold text-[#191c1d] font-heading flex items-center gap-2">
-            <span className="material-symbols-outlined text-[#0058be]">published_with_changes</span>
+          <h2 className="text-2xl font-bold text-[#191c1d] dark:text-white font-heading flex items-center gap-2">
+            <span className="material-symbols-outlined text-[#0058be] dark:text-[#38bdf8]">published_with_changes</span>
             Conversion Workplace ({files.length} {files.length === 1 ? 'file' : 'files'})
           </h2>
-          <p className="text-sm text-[#424754]">Select your target formats and click convert to start process.</p>
+          <p className="text-sm text-[#424754] dark:text-[#94a3b8]">Select your target formats and click convert to start process.</p>
         </div>
 
         <div className="flex items-center gap-3 flex-wrap w-full md:w-auto">
           <button
             onClick={onAddMore}
-            className="text-xs md:text-sm font-semibold text-[#0058be] bg-[#d8e2ff] hover:bg-[#adc6ff] px-4 py-2 rounded-full transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="text-xs md:text-sm font-semibold text-[#0058be] dark:text-[#38bdf8] bg-[#d8e2ff] dark:bg-[#1e293b] hover:bg-[#adc6ff] dark:hover:bg-[#334155] px-4 py-2 rounded-full transition-colors flex items-center gap-1.5 cursor-pointer"
           >
             <span className="material-symbols-outlined text-base">add</span>
             Add Files
@@ -51,7 +51,7 @@ export const ActiveConverter: React.FC<ActiveConverterProps> = ({
           
           <button
             onClick={onClearAll}
-            className="text-xs md:text-sm font-semibold text-[#424754] hover:text-[#ba1a1a] px-3 py-2 transition-colors cursor-pointer"
+            className="text-xs md:text-sm font-semibold text-[#424754] dark:text-[#94a3b8] hover:text-[#ba1a1a] dark:hover:text-[#f87171] px-3 py-2 transition-colors cursor-pointer"
           >
             Clear All
           </button>
@@ -61,10 +61,10 @@ export const ActiveConverter: React.FC<ActiveConverterProps> = ({
             disabled={isAnyConverting}
             className={`text-xs md:text-sm font-semibold text-white px-6 py-2.5 rounded-full transition-all shadow-md flex items-center gap-2 cursor-pointer ${
               isAnyConverting
-                ? 'bg-[#0058be]/60 cursor-not-allowed'
+                ? 'bg-[#0058be]/60 dark:bg-[#0284c7]/60 cursor-not-allowed'
                 : allCompleted
-                ? 'bg-[#006c49] hover:bg-[#00714d]'
-                : 'bg-[#0058be] hover:bg-[#2170e4]'
+                ? 'bg-[#006c49] dark:bg-[#10b981] hover:bg-[#00714d] dark:hover:bg-[#059669]'
+                : 'bg-[#0058be] dark:bg-[#0284c7] hover:bg-[#2170e4] dark:hover:bg-[#0369a1]'
             }`}
           >
             <span className="material-symbols-outlined text-base">
@@ -84,14 +84,16 @@ export const ActiveConverter: React.FC<ActiveConverterProps> = ({
           return (
             <div
               key={item.id}
-              className={`bg-white rounded-2xl p-5 soft-shadow border transition-all duration-300 ${
-                isDone ? 'border-[#6cf8bb] bg-[#f0fdf4]/30' : 'border-[#e1e3e4] hover:border-[#adc6ff]'
+              className={`bg-white dark:bg-[#161f30] rounded-2xl p-5 soft-shadow border transition-all duration-300 ${
+                isDone
+                  ? 'border-[#6cf8bb] dark:border-[#10b981]/50 bg-[#f0fdf4]/30 dark:bg-[#064e3b]/20'
+                  : 'border-[#e1e3e4] dark:border-[#262c3a] hover:border-[#adc6ff] dark:hover:border-[#334155]'
               }`}
             >
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 {/* File Thumbnail & Meta */}
                 <div className="flex items-center gap-4 min-w-0 flex-1">
-                  <div className="w-12 h-12 rounded-xl bg-[#f3f4f5] flex items-center justify-center shrink-0 text-[#0058be]">
+                  <div className="w-12 h-12 rounded-xl bg-[#f3f4f5] dark:bg-[#1e293b] flex items-center justify-center shrink-0 text-[#0058be] dark:text-[#38bdf8]">
                     {item.type.startsWith('image/') ? (
                       item.previewUrl ? (
                         <img
@@ -103,26 +105,26 @@ export const ActiveConverter: React.FC<ActiveConverterProps> = ({
                         <span className="material-symbols-outlined text-2xl">image</span>
                       )
                     ) : item.extension === 'pdf' ? (
-                      <span className="material-symbols-outlined text-2xl text-[#ba1a1a]">picture_as_pdf</span>
+                      <span className="material-symbols-outlined text-2xl text-[#ba1a1a] dark:text-[#f87171]">picture_as_pdf</span>
                     ) : item.extension === 'csv' || item.extension === 'json' ? (
-                      <span className="material-symbols-outlined text-2xl text-[#006c49]">table_view</span>
+                      <span className="material-symbols-outlined text-2xl text-[#006c49] dark:text-[#34d399]">table_view</span>
                     ) : (
-                      <span className="material-symbols-outlined text-2xl text-[#0058be]">description</span>
+                      <span className="material-symbols-outlined text-2xl text-[#0058be] dark:text-[#38bdf8]">description</span>
                     )}
                   </div>
 
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-base font-semibold text-[#191c1d] truncate font-heading" title={item.name}>
+                    <h3 className="text-base font-semibold text-[#191c1d] dark:text-white truncate font-heading" title={item.name}>
                       {item.name}
                     </h3>
-                    <p className="text-xs text-[#424754] flex items-center gap-2 mt-0.5">
+                    <p className="text-xs text-[#424754] dark:text-[#94a3b8] flex items-center gap-2 mt-0.5">
                       <span>{formatBytes(item.size)}</span>
                       <span>•</span>
-                      <span className="uppercase font-semibold text-[#0058be]">{item.extension || 'FILE'}</span>
+                      <span className="uppercase font-semibold text-[#0058be] dark:text-[#38bdf8]">{item.extension || 'FILE'}</span>
                       {isDone && item.convertedSize && (
                         <>
                           <span>→</span>
-                          <span className="text-[#006c49] font-bold">
+                          <span className="text-[#006c49] dark:text-[#34d399] font-bold">
                             {formatBytes(item.convertedSize)} (Done)
                           </span>
                         </>
@@ -132,17 +134,17 @@ export const ActiveConverter: React.FC<ActiveConverterProps> = ({
                 </div>
 
                 {/* Target Format Selector & Actions */}
-                <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end shrink-0 border-t md:border-t-0 pt-3 md:pt-0 border-[#e1e3e4]">
+                <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end shrink-0 border-t md:border-t-0 pt-3 md:pt-0 border-[#e1e3e4] dark:border-[#262c3a]">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-semibold text-[#424754]">To:</span>
+                    <span className="text-xs font-semibold text-[#424754] dark:text-[#94a3b8]">To:</span>
                     <select
                       value={item.targetFormat}
                       onChange={(e) => onUpdateTargetFormat(item.id, e.target.value)}
                       disabled={isConverting}
-                      className="bg-[#f3f4f5] text-[#191c1d] text-xs font-bold px-3 py-2 rounded-lg border border-[#c2c6d6] focus:border-[#0058be] focus:outline-none cursor-pointer"
+                      className="bg-[#f3f4f5] dark:bg-[#1e293b] text-[#191c1d] dark:text-white text-xs font-bold px-3 py-2 rounded-lg border border-[#c2c6d6] dark:border-[#334155] focus:border-[#0058be] dark:focus:border-[#38bdf8] focus:outline-none cursor-pointer"
                     >
                       {item.availableFormats.map((fmt) => (
-                        <option key={fmt} value={fmt}>
+                        <option key={fmt} value={fmt} className="bg-white dark:bg-[#1e293b] text-[#191c1d] dark:text-white">
                           {fmt}
                         </option>
                       ))}
@@ -161,7 +163,7 @@ export const ActiveConverter: React.FC<ActiveConverterProps> = ({
                             url: item.convertedUrl
                           })
                         }
-                        className="p-2 text-[#0058be] hover:bg-[#d8e2ff]/50 rounded-lg transition-colors cursor-pointer"
+                        className="p-2 text-[#0058be] dark:text-[#38bdf8] hover:bg-[#d8e2ff]/50 dark:hover:bg-[#1e293b] rounded-lg transition-colors cursor-pointer"
                         title="Quick Preview"
                       >
                         <span className="material-symbols-outlined text-lg">visibility</span>
@@ -173,7 +175,7 @@ export const ActiveConverter: React.FC<ActiveConverterProps> = ({
                       <a
                         href={item.convertedUrl}
                         download={item.convertedName}
-                        className="bg-[#006c49] text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-[#00714d] transition-colors flex items-center gap-1.5 shadow-sm"
+                        className="bg-[#006c49] dark:bg-[#10b981] text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-[#00714d] dark:hover:bg-[#059669] transition-colors flex items-center gap-1.5 shadow-sm"
                       >
                         <span className="material-symbols-outlined text-base">download</span>
                         Download
@@ -182,7 +184,7 @@ export const ActiveConverter: React.FC<ActiveConverterProps> = ({
                       <button
                         onClick={() => onConvertFile(item.id)}
                         disabled={isConverting}
-                        className="bg-[#0058be] text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-[#2170e4] transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                        className="bg-[#0058be] dark:bg-[#0284c7] text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-[#2170e4] dark:hover:bg-[#0369a1] transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                       >
                         <span className="material-symbols-outlined text-base">
                           {isConverting ? 'sync' : 'play_arrow'}
@@ -195,7 +197,7 @@ export const ActiveConverter: React.FC<ActiveConverterProps> = ({
                     <button
                       onClick={() => onRemoveFile(item.id)}
                       disabled={isConverting}
-                      className="p-2 text-[#727785] hover:text-[#ba1a1a] hover:bg-[#ffdad6]/50 rounded-lg transition-colors cursor-pointer disabled:opacity-30"
+                      className="p-2 text-[#727785] dark:text-[#94a3b8] hover:text-[#ba1a1a] dark:hover:text-[#f87171] hover:bg-[#ffdad6]/50 dark:hover:bg-[#7f1d1d]/30 rounded-lg transition-colors cursor-pointer disabled:opacity-30"
                       title="Remove"
                     >
                       <span className="material-symbols-outlined text-lg">close</span>
@@ -207,13 +209,13 @@ export const ActiveConverter: React.FC<ActiveConverterProps> = ({
               {/* Progress Bar during Conversion */}
               {isConverting && (
                 <div className="mt-4 w-full">
-                  <div className="flex justify-between items-center text-xs font-semibold text-[#0058be] mb-1">
+                  <div className="flex justify-between items-center text-xs font-semibold text-[#0058be] dark:text-[#38bdf8] mb-1">
                     <span>Converting to {item.targetFormat}...</span>
                     <span>{item.progress}%</span>
                   </div>
-                  <div className="w-full bg-[#edeeef] h-2 rounded-full overflow-hidden">
+                  <div className="w-full bg-[#edeeef] dark:bg-[#1e293b] h-2 rounded-full overflow-hidden">
                     <div
-                      className="bg-[#0058be] h-full transition-all duration-300 animated-progress-bar rounded-full"
+                      className="bg-[#0058be] dark:bg-[#38bdf8] h-full transition-all duration-300 animated-progress-bar rounded-full"
                       style={{ width: `${item.progress}%` }}
                     ></div>
                   </div>
@@ -226,27 +228,27 @@ export const ActiveConverter: React.FC<ActiveConverterProps> = ({
 
       {/* Preview Modal */}
       {previewContent && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 max-w-2xl w-full max-h-[80vh] flex flex-col soft-shadow animate-in fade-in zoom-in-95">
-            <div className="flex justify-between items-center border-b border-[#e1e3e4] pb-4 mb-4">
-              <h3 className="font-bold text-lg text-[#191c1d] font-heading truncate">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#161f30] rounded-2xl p-6 max-w-2xl w-full max-h-[80vh] flex flex-col soft-shadow animate-in fade-in zoom-in-95 border border-[#e1e3e4] dark:border-[#262c3a]">
+            <div className="flex justify-between items-center border-b border-[#e1e3e4] dark:border-[#262c3a] pb-4 mb-4">
+              <h3 className="font-bold text-lg text-[#191c1d] dark:text-white font-heading truncate">
                 Preview: {previewContent.name}
               </h3>
               <button
                 onClick={() => setPreviewContent(null)}
-                className="p-1 text-[#727785] hover:text-[#191c1d] rounded-lg cursor-pointer"
+                className="p-1 text-[#727785] dark:text-[#94a3b8] hover:text-[#191c1d] dark:hover:text-white rounded-lg cursor-pointer"
               >
                 <span className="material-symbols-outlined">close</span>
               </button>
             </div>
 
-            <div className="flex-1 overflow-auto bg-[#f8f9fa] p-4 rounded-xl font-mono text-xs text-[#191c1d]">
+            <div className="flex-1 overflow-auto bg-[#f8f9fa] dark:bg-[#0f172a] p-4 rounded-xl font-mono text-xs text-[#191c1d] dark:text-[#e2e8f0] border border-[#e1e3e4] dark:border-[#1e293b]">
               {previewContent.isImage && previewContent.url ? (
                 <div className="flex justify-center items-center p-4">
                   <img
                     src={previewContent.url}
                     alt="Converted output"
-                    className="max-h-[50vh] object-contain rounded-lg border border-[#e1e3e4]"
+                    className="max-h-[50vh] object-contain rounded-lg border border-[#e1e3e4] dark:border-[#334155]"
                   />
                 </div>
               ) : (
@@ -257,7 +259,7 @@ export const ActiveConverter: React.FC<ActiveConverterProps> = ({
             <div className="mt-4 flex justify-end gap-2">
               <button
                 onClick={() => setPreviewContent(null)}
-                className="bg-[#0058be] text-white px-5 py-2 rounded-full text-xs font-bold cursor-pointer hover:bg-[#2170e4]"
+                className="bg-[#0058be] dark:bg-[#0284c7] text-white px-5 py-2 rounded-full text-xs font-bold cursor-pointer hover:bg-[#2170e4] dark:hover:bg-[#0369a1]"
               >
                 Close Preview
               </button>

@@ -24,32 +24,32 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full soft-shadow animate-in fade-in zoom-in-95 relative">
+    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+      <div className="bg-white dark:bg-[#161f30] rounded-3xl p-6 md:p-8 max-w-md w-full soft-shadow animate-in fade-in zoom-in-95 relative border border-[#e1e3e4] dark:border-[#262c3a]">
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 text-[#727785] hover:text-[#191c1d] rounded-full cursor-pointer"
+          className="absolute top-5 right-5 p-2 text-[#727785] dark:text-[#94a3b8] hover:text-[#191c1d] dark:hover:text-white rounded-full cursor-pointer"
         >
           <span className="material-symbols-outlined">close</span>
         </button>
 
         <div className="text-center mb-6">
-          <div className="w-12 h-12 bg-[#d8e2ff] text-[#0058be] rounded-2xl flex items-center justify-center mx-auto mb-3">
+          <div className="w-12 h-12 bg-[#d8e2ff] dark:bg-[#1e293b] text-[#0058be] dark:text-[#38bdf8] rounded-2xl flex items-center justify-center mx-auto mb-3">
             <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-              cycle
+              transform
             </span>
           </div>
-          <h2 className="text-2xl font-bold text-[#191c1d] font-heading">Welcome to ConvertFlow</h2>
-          <p className="text-xs text-[#424754] mt-1">Sign in to sync your conversion history and access Pro tools</p>
+          <h2 className="text-2xl font-bold text-[#191c1d] dark:text-white font-heading">Welcome to Data Converter</h2>
+          <p className="text-xs text-[#424754] dark:text-[#94a3b8] mt-1">Sign in to sync your conversion history and access Pro tools</p>
         </div>
 
         {/* Google OAuth Button */}
         <button
           onClick={() => {
-            onSuccess('demo.user@convertflow.com');
+            onSuccess('demo.user@dataconverter.com');
             onClose();
           }}
-          className="w-full bg-[#f3f4f5] hover:bg-[#e1e3e4] text-[#191c1d] border border-[#c2c6d6] text-xs font-bold py-3 rounded-full flex items-center justify-center gap-2 mb-4 transition-colors cursor-pointer"
+          className="w-full bg-[#f3f4f5] dark:bg-[#1e293b] hover:bg-[#e1e3e4] dark:hover:bg-[#334155] text-[#191c1d] dark:text-white border border-[#c2c6d6] dark:border-[#334155] text-xs font-bold py-3 rounded-full flex items-center justify-center gap-2 mb-4 transition-colors cursor-pointer"
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24">
             <path
@@ -73,39 +73,39 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         </button>
 
         <div className="flex items-center my-4">
-          <div className="flex-1 border-t border-[#e1e3e4]"></div>
-          <span className="px-3 text-[10px] font-bold uppercase text-[#727785]">or email</span>
-          <div className="flex-1 border-t border-[#e1e3e4]"></div>
+          <div className="flex-1 border-t border-[#e1e3e4] dark:border-[#262c3a]"></div>
+          <span className="px-3 text-[10px] font-bold uppercase text-[#727785] dark:text-[#94a3b8]">or email</span>
+          <div className="flex-1 border-t border-[#e1e3e4] dark:border-[#262c3a]"></div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-[#191c1d] mb-1">Email Address</label>
+            <label className="block text-xs font-semibold text-[#191c1d] dark:text-white mb-1">Email Address</label>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="name@example.com"
-              className="w-full bg-[#f8f9fa] border border-[#c2c6d6] rounded-xl px-4 py-2.5 text-xs text-[#191c1d] focus:outline-none focus:border-[#0058be]"
+              className="w-full bg-[#f8f9fa] dark:bg-[#0f172a] border border-[#c2c6d6] dark:border-[#334155] rounded-xl px-4 py-2.5 text-xs text-[#191c1d] dark:text-white focus:outline-none focus:border-[#0058be] dark:focus:border-[#38bdf8]"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#191c1d] mb-1">Password</label>
+            <label className="block text-xs font-semibold text-[#191c1d] dark:text-white mb-1">Password</label>
             <input
               type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full bg-[#f8f9fa] border border-[#c2c6d6] rounded-xl px-4 py-2.5 text-xs text-[#191c1d] focus:outline-none focus:border-[#0058be]"
+              className="w-full bg-[#f8f9fa] dark:bg-[#0f172a] border border-[#c2c6d6] dark:border-[#334155] rounded-xl px-4 py-2.5 text-xs text-[#191c1d] dark:text-white focus:outline-none focus:border-[#0058be] dark:focus:border-[#38bdf8]"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-[#0058be] text-white text-xs font-bold py-3 rounded-full hover:bg-[#2170e4] transition-colors cursor-pointer shadow-sm"
+            className="w-full bg-[#0058be] dark:bg-[#0284c7] text-white text-xs font-bold py-3 rounded-full hover:bg-[#2170e4] dark:hover:bg-[#0369a1] transition-colors cursor-pointer shadow-sm"
           >
             Sign In / Register
           </button>
@@ -114,3 +114,4 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     </div>
   );
 };
+

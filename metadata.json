@@ -1,6 +1,6 @@
 {
-  "name": "ConvertFlow",
-  "description": "Seamless file conversion platform for documents, images, data, and media.",
+  "name": "Data Converter",
+  "description": "Seamless file and data conversion platform for documents, images, data, and code.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @layer base {
   body {
     font-family: 'Inter', sans-serif;
@@ -14,12 +16,24 @@
   background: linear-gradient(180deg, #f8f9fa 0%, #eef3ff 100%);
 }
 
+.dark .gradient-bg {
+  background: linear-gradient(180deg, #0f1318 0%, #141b2d 100%);
+}
+
 .soft-shadow {
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
 }
 
+.dark .soft-shadow {
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.35);
+}
+
 .card-shadow {
   box-shadow: 0px 8px 30px rgba(0, 88, 190, 0.06);
+}
+
+.dark .card-shadow {
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.4);
 }
 
 .dropzone-hover {
@@ -28,6 +42,11 @@
 
 .dropzone-hover:hover {
   background-color: #f0fdf4;
+  border-color: #6cf8bb;
+}
+
+.dark .dropzone-hover:hover {
+  background-color: rgba(108, 248, 187, 0.08);
   border-color: #6cf8bb;
 }
 
@@ -59,3 +78,4 @@
   background-size: 30px 30px;
   animation: progress-stripe 1s linear infinite;
 }
+
