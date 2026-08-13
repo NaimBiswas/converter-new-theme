@@ -28,6 +28,7 @@ export interface UploadedFileItem {
   availableFormats: string[];
   status: 'idle' | 'converting' | 'completed' | 'error';
   progress: number;
+  conversionStartTime?: number;
   convertedBlob?: Blob;
   convertedUrl?: string;
   convertedSize?: number;

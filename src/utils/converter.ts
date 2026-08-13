@@ -753,3 +753,45 @@ export function formatBytes(bytes: number, decimals = 1): string {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
+
+/**
+ * Calculates estimated time remaining based on file size (bytes), progress percentage, and start time
+ */
+export function getEstimatedTimeRemaining(
+  fileSizeBytes: number,
+  progress: number,
+  startTime?: number
+): string {
+  if (progress <= 0) return 'Calculating...';
+  if (progress >= 100) return 'Finishing up...';
+
+  const sizeInMB = fileSizeBytes / (1024 * 1024);
+
+  // Baseline processing speed estimate based on file size:
+  // Base overhead ~1.2s + ~0.85s per MB for client-side parsing/processing
+  let totalEstSeconds = 1.2 + sizeInMB * 0.85;
+
+  // Adjust estimate dynamically if start time is provided and processing has begun
+  if (startTime) {
+    const elapsedSeconds = (Date.now() - startTime) / 1000;
+    if (elapsedSeconds > 0.1 && progress > 5) {
+      const calculatedTotalSeconds = (elapsedSeconds / progress) * 100;
+      // Blend size model with measured rate
+      totalEstSeconds = calculatedTotalSeconds * 0.7 + totalEstSeconds * 0.3;
+    }
+  }
+
+  const remainingSeconds = Math.max(0, totalEstSeconds * (1 - progress / 100));
+
+  if (remainingSeconds < 0.8 || progress >= 95) {
+    return '< 1s remaining';
+  } else if (remainingSeconds < 60) {
+    const sec = Math.ceil(remainingSeconds);
+    return `~${sec}s remaining`;
+  } else {
+    const mins = Math.floor(remainingSeconds / 60);
+    const secs = Math.ceil(remainingSeconds % 60);
+    return `~${mins}m ${secs}s remaining`;
+  }
+}
+

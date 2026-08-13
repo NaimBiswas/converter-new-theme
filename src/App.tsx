@@ -118,16 +118,43 @@ export default function App() {
     const item = files.find((f) => f.id === id);
     if (!item) return;
 
+    const startTime = Date.now();
+
     setFiles((prev) =>
-      prev.map((f) => (f.id === id ? { ...f, status: 'converting', progress: 10 } : f))
+      prev.map((f) =>
+        f.id === id ? { ...f, status: 'converting', progress: 10, conversionStartTime: startTime } : f
+      )
     );
+
+    let currentProgress = 10;
+    // Step speed based on file size: smaller files tick faster, larger files tick steadily
+    const stepInterval = Math.max(120, Math.min(600, Math.floor(item.size / 5000)));
+    const progressTimer = setInterval(() => {
+      setFiles((prev) =>
+        prev.map((f) => {
+          if (f.id === id && f.status === 'converting' && f.progress < 90) {
+            currentProgress = Math.min(90, f.progress + Math.floor(Math.random() * 8) + 4);
+            return { ...f, progress: currentProgress };
+          }
+          return f;
+        })
+      );
+    }, stepInterval);
 
     try {
       const result = await convertSingleFile(item, (p) => {
         setFiles((prev) =>
-          prev.map((f) => (f.id === id ? { ...f, progress: p } : f))
+          prev.map((f) => (f.id === id ? { ...f, progress: Math.max(currentProgress, p) } : f))
         );
       });
+
+      clearInterval(progressTimer);
+
+      // Brief finalization state at 95%
+      setFiles((prev) =>
+        prev.map((f) => (f.id === id ? { ...f, progress: 95 } : f))
+      );
+      await new Promise((res) => setTimeout(res, 200));
 
       setFiles((prev) =>
         prev.map((f) =>
@@ -148,6 +175,7 @@ export default function App() {
 
       showToast(`Successfully converted ${item.name} to ${item.targetFormat}!`);
     } catch (err: any) {
+      clearInterval(progressTimer);
       setFiles((prev) =>
         prev.map((f) =>
           f.id === id

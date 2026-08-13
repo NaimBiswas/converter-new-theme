@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { UploadedFileItem } from '../types';
-import { formatBytes } from '../utils/converter';
+import { formatBytes, getEstimatedTimeRemaining } from '../utils/converter';
 
 interface ActiveConverterProps {
   files: UploadedFileItem[];
@@ -117,10 +117,19 @@ export const ActiveConverter: React.FC<ActiveConverterProps> = ({
                     <h3 className="text-base font-semibold text-[#191c1d] dark:text-white truncate font-heading" title={item.name}>
                       {item.name}
                     </h3>
-                    <p className="text-xs text-[#424754] dark:text-[#94a3b8] flex items-center gap-2 mt-0.5">
+                    <p className="text-xs text-[#424754] dark:text-[#94a3b8] flex items-center gap-2 mt-0.5 flex-wrap">
                       <span>{formatBytes(item.size)}</span>
                       <span>•</span>
                       <span className="uppercase font-semibold text-[#0058be] dark:text-[#38bdf8]">{item.extension || 'FILE'}</span>
+                      {isConverting && (
+                        <>
+                          <span>→</span>
+                          <span className="text-[#0058be] dark:text-[#38bdf8] font-bold inline-flex items-center gap-1 bg-[#d8e2ff]/50 dark:bg-[#1e293b] px-2 py-0.5 rounded-md">
+                            <span className="material-symbols-outlined text-xs animate-spin">sync</span>
+                            ETA: {getEstimatedTimeRemaining(item.size, item.progress, item.conversionStartTime)}
+                          </span>
+                        </>
+                      )}
                       {isDone && item.convertedSize && (
                         <>
                           <span>→</span>
@@ -208,16 +217,41 @@ export const ActiveConverter: React.FC<ActiveConverterProps> = ({
 
               {/* Progress Bar during Conversion */}
               {isConverting && (
-                <div className="mt-4 w-full">
-                  <div className="flex justify-between items-center text-xs font-semibold text-[#0058be] dark:text-[#38bdf8] mb-1">
-                    <span>Converting to {item.targetFormat}...</span>
-                    <span>{item.progress}%</span>
+                <div className="mt-4 p-3.5 bg-[#f0f5ff] dark:bg-[#111927] rounded-xl border border-[#c1d3fe] dark:border-[#1e2d4a] transition-all">
+                  <div className="flex flex-wrap justify-between items-center text-xs font-semibold text-[#0058be] dark:text-[#38bdf8] mb-2 gap-2">
+                    <span className="flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-base animate-spin">sync</span>
+                      Converting to <span className="font-bold underline">{item.targetFormat}</span>
+                    </span>
+
+                    <div className="flex items-center gap-2.5">
+                      {/* Estimated Time Remaining Badge */}
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white dark:bg-[#1e293b] border border-[#d8e2ff] dark:border-[#334155] text-[11px] font-bold text-[#0058be] dark:text-[#38bdf8] shadow-2xs">
+                        <span className="material-symbols-outlined text-xs">schedule</span>
+                        Est. time remaining: {getEstimatedTimeRemaining(item.size, item.progress, item.conversionStartTime)}
+                      </span>
+
+                      <span className="font-extrabold text-[#0058be] dark:text-[#38bdf8]">{item.progress}%</span>
+                    </div>
                   </div>
-                  <div className="w-full bg-[#edeeef] dark:bg-[#1e293b] h-2 rounded-full overflow-hidden">
+
+                  {/* Animated Progress Bar */}
+                  <div className="w-full bg-[#d8e2ff]/60 dark:bg-[#1e293b] h-2.5 rounded-full overflow-hidden p-0.5 border border-[#c1d3fe]/60 dark:border-[#334155]">
                     <div
-                      className="bg-[#0058be] dark:bg-[#38bdf8] h-full transition-all duration-300 animated-progress-bar rounded-full"
+                      className="bg-gradient-to-r from-[#0058be] via-[#2170e4] to-[#38bdf8] dark:from-[#0284c7] dark:via-[#0ea5e9] dark:to-[#38bdf8] h-full transition-all duration-300 rounded-full shadow-xs"
                       style={{ width: `${item.progress}%` }}
                     ></div>
+                  </div>
+
+                  <div className="flex justify-between items-center text-[11px] text-[#424754] dark:text-[#94a3b8] mt-2 px-0.5">
+                    <span className="flex items-center gap-1">
+                      <span className="material-symbols-outlined text-xs">hard_drive</span>
+                      File size: {formatBytes(item.size)}
+                    </span>
+                    <span className="flex items-center gap-1 text-[#00714d] dark:text-[#6ee7b7]">
+                      <span className="material-symbols-outlined text-xs">bolt</span>
+                      Local Browser Engine
+                    </span>
                   </div>
                 </div>
               )}
