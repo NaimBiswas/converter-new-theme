@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useJsonLd } from '../../utils/structuredData';
 
 interface FAQItem {
   id: string;
@@ -73,6 +74,16 @@ export const HelpPage: React.FC<{ onNavigateToContact?: () => void; onNavigateTo
         'Yes, our REST API standardizes JSON request payloads and multipart form uploads. Code snippets for cURL, JavaScript/Node.js, and Python are provided in the API documentation.',
     },
   ];
+
+  useJsonLd('help-faq', {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  });
 
   const categories = [
     { id: 'all', label: 'All Topics', icon: 'auto_awesome' },

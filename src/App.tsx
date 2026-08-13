@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { applyPageMeta, PAGE_META } from './utils/meta';
 import { Header } from './components/Header';
 import { HeroDropzone } from './components/HeroDropzone';
 import { ActiveConverter } from './components/ActiveConverter';
@@ -14,14 +15,14 @@ import { Footer } from './components/Footer';
 import { WhyDataConverter } from './components/WhyDataConverter';
 
 // Pages
-import { ToolsPage } from './components/pages/ToolsPage';
-import { ApiPage } from './components/pages/ApiPage';
-import { PricingPage } from './components/pages/PricingPage';
-import { DocsPage } from './components/pages/DocsPage';
-import { PrivacyPage } from './components/pages/PrivacyPage';
-import { TermsPage } from './components/pages/TermsPage';
-import { HelpPage } from './components/pages/HelpPage';
-import { ContactPage } from './components/pages/ContactPage';
+const ToolsPage = lazy(() => import('./components/pages/ToolsPage').then((m) => ({ default: m.ToolsPage })));
+const ApiPage = lazy(() => import('./components/pages/ApiPage').then((m) => ({ default: m.ApiPage })));
+const PricingPage = lazy(() => import('./components/pages/PricingPage').then((m) => ({ default: m.PricingPage })));
+const DocsPage = lazy(() => import('./components/pages/DocsPage').then((m) => ({ default: m.DocsPage })));
+const PrivacyPage = lazy(() => import('./components/pages/PrivacyPage').then((m) => ({ default: m.PrivacyPage })));
+const TermsPage = lazy(() => import('./components/pages/TermsPage').then((m) => ({ default: m.TermsPage })));
+const HelpPage = lazy(() => import('./components/pages/HelpPage').then((m) => ({ default: m.HelpPage })));
+const ContactPage = lazy(() => import('./components/pages/ContactPage').then((m) => ({ default: m.ContactPage })));
 
 import { POPULAR_TOOLS } from './data/tools';
 import { ConversionTool, UploadedFileItem } from './types';
@@ -36,8 +37,19 @@ function ScrollToTop() {
   return null;
 }
 
+function PageLoader() {
+  return (
+    <div className="flex items-center justify-center min-h-[60vh]">
+      <span className="material-symbols-outlined animate-spin text-3xl text-[#0058be] dark:text-[#38bdf8]">
+        progress_activity
+      </span>
+    </div>
+  );
+}
+
 export default function App() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem('theme');
     if (saved === 'dark' || saved === 'light') return saved;
@@ -59,6 +71,14 @@ export default function App() {
       document.documentElement.classList.remove('dark');
     }
   }, [theme]);
+
+  useEffect(() => {
+    const normalized =
+      location.pathname.length > 1 && location.pathname.endsWith('/')
+        ? location.pathname.slice(0, -1)
+        : location.pathname;
+    applyPageMeta(PAGE_META[normalized] ?? PAGE_META['/']);
+  }, [location.pathname]);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
@@ -296,65 +316,67 @@ export default function App() {
 
       {/* Main Content Area handled by Router */}
       <main className="flex-1">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                {/* Hero & Upload Dropzone */}
-                <HeroDropzone onFilesSelected={handleFilesAdded} />
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  {/* Hero & Upload Dropzone */}
+                  <HeroDropzone onFilesSelected={handleFilesAdded} />
 
-                {/* Active Conversion Workplace */}
-                <div id="conversion-workplace">
-                  <ActiveConverter
-                    files={files}
-                    onUpdateTargetFormat={handleUpdateTargetFormat}
-                    onConvertFile={handleConvertFile}
-                    onConvertAll={handleConvertAll}
-                    onRemoveFile={handleRemoveFile}
-                    onAddMore={() => {
-                      const input = document.createElement('input');
-                      input.type = 'file';
-                      input.multiple = true;
-                      input.onchange = (e: any) => {
-                        if (e.target.files) handleFilesAdded(e.target.files);
-                      };
-                      input.click();
-                    }}
-                    onClearAll={handleClearAll}
+                  {/* Active Conversion Workplace */}
+                  <div id="conversion-workplace">
+                    <ActiveConverter
+                      files={files}
+                      onUpdateTargetFormat={handleUpdateTargetFormat}
+                      onConvertFile={handleConvertFile}
+                      onConvertAll={handleConvertAll}
+                      onRemoveFile={handleRemoveFile}
+                      onAddMore={() => {
+                        const input = document.createElement('input');
+                        input.type = 'file';
+                        input.multiple = true;
+                        input.onchange = (e: any) => {
+                          if (e.target.files) handleFilesAdded(e.target.files);
+                        };
+                        input.click();
+                      }}
+                      onClearAll={handleClearAll}
+                    />
+                  </div>
+
+                  {/* How It Works Section */}
+                  <HowItWorks />
+
+                  {/* Popular Tools Section */}
+                  <PopularTools
+                    tools={POPULAR_TOOLS}
+                    onSelectTool={handleSelectTool}
                   />
-                </div>
+                </>
+              }
+            />
 
-                {/* How It Works Section */}
-                <HowItWorks />
-
-                {/* Popular Tools Section */}
-                <PopularTools
-                  tools={POPULAR_TOOLS}
-                  onSelectTool={handleSelectTool}
+            <Route path="/tools" element={<ToolsPage onSelectTool={handleSelectTool} />} />
+            <Route path="/api" element={<ApiPage />} />
+            <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/docs" element={<DocsPage />} />
+            <Route path="/privacy" element={<PrivacyPage onNavigateToContact={() => navigate('/contact')} />} />
+            <Route path="/terms" element={<TermsPage onNavigateToContact={() => navigate('/contact')} />} />
+            <Route
+              path="/help"
+              element={
+                <HelpPage
+                  onNavigateToContact={() => navigate('/contact')}
+                  onNavigateToApi={() => navigate('/api')}
                 />
-              </>
-            }
-          />
-
-          <Route path="/tools" element={<ToolsPage onSelectTool={handleSelectTool} />} />
-          <Route path="/api" element={<ApiPage />} />
-          <Route path="/pricing" element={<PricingPage />} />
-          <Route path="/docs" element={<DocsPage />} />
-          <Route path="/privacy" element={<PrivacyPage onNavigateToContact={() => navigate('/contact')} />} />
-          <Route path="/terms" element={<TermsPage onNavigateToContact={() => navigate('/contact')} />} />
-          <Route
-            path="/help"
-            element={
-              <HelpPage
-                onNavigateToContact={() => navigate('/contact')}
-                onNavigateToApi={() => navigate('/api')}
-              />
-            }
-          />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+              }
+            />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
       </main>
 
       {/* Quick Modals */}
