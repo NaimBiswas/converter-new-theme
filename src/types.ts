@@ -1,4 +1,4 @@
-export type ToolCategory = 'all' | 'documents' | 'images' | 'data' | 'code' | 'text';
+export type ToolCategory = 'all' | 'data' | 'spreadsheet' | 'images' | 'pdf' | 'devtools' | 'documents' | 'code' | 'text';
 
 export interface ConversionTool {
   id: string;

@@ -95,12 +95,6 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={onOpenAuthModal}
-            className="hidden sm:block text-xs font-bold text-[#424754] dark:text-[#cbd5e1] hover:text-[#0058be] dark:hover:text-[#38bdf8] px-3 py-2 transition-colors cursor-pointer"
-          >
-            Sign In
-          </button>
-          <button
-            onClick={onOpenAuthModal}
             className="bg-[#0058be] dark:bg-[#0284c7] text-white text-xs font-bold px-5 py-2.5 rounded-full hover:bg-[#2170e4] dark:hover:bg-[#0369a1] active:scale-95 transition-all shadow-sm cursor-pointer"
           >
             Get Started

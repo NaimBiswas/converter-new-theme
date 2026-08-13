@@ -19,6 +19,7 @@ import { DocsPage } from './components/pages/DocsPage';
 import { POPULAR_TOOLS } from './data/tools';
 import { ConversionTool, UploadedFileItem } from './types';
 import { convertSingleFile, getAvailableTargetFormats } from './utils/converter';
+import * as XLSX from 'xlsx';
 
 export default function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -166,20 +167,46 @@ export default function App() {
   // Launch popular tool preset with sample file if no file uploaded
   const handleSelectTool = (tool: ConversionTool) => {
     let filename = `sample_dataset.${tool.fromFormat.toLowerCase()}`;
-    let content = 'col1,col2,col3\nval1,val2,val3\nhello,world,dataconverter';
+    let content = 'name,role,department\nAlice,Engineer,Development\nBob,Designer,Design';
     let type = 'text/csv';
 
-    if (tool.id === 'pdf-to-word' || tool.fromFormat === 'PDF') {
+    if (tool.fromFormat === 'XML') {
+      filename = 'data_export.xml';
+      content = '<?xml version="1.0" encoding="UTF-8"?>\n<records>\n  <item>\n    <name>Alice</name>\n    <role>Engineer</role>\n  </item>\n</records>';
+      type = 'application/xml';
+    } else if (tool.fromFormat === 'YAML') {
+      filename = 'config.yaml';
+      content = 'app:\n  name: Data Converter\n  version: 2.0\nfeatures:\n  - csv\n  - json\n  - excel';
+      type = 'text/yaml';
+    } else if (tool.fromFormat === 'Excel') {
+      filename = 'workbook.xlsx';
+      const ws = XLSX.utils.aoa_to_sheet([
+        ['Name', 'Role', 'Department'],
+        ['Alice', 'Engineer', 'Dev'],
+        ['Bob', 'Designer', 'UX'],
+      ]);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+      const sampleFile = new File([excelBuffer], filename, {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+      handleFilesAdded([sampleFile]);
+      return;
+    } else if (tool.fromFormat === 'Base64') {
+      filename = 'token.txt';
+      content = 'SGVsbG8gRGF0YSBDb252ZXJ0ZXIh';
+      type = 'text/plain';
+    } else if (tool.fromFormat === 'PDF' || tool.toFormat === 'PDF') {
       filename = 'sample_document.pdf';
       content = 'Sample PDF document content for Data Converter transformation.';
       type = 'application/pdf';
     } else if (tool.fromFormat === 'JSON') {
       filename = 'data_export.json';
-      content = JSON.stringify([{ id: 1, title: 'Item 1', status: 'active' }], null, 2);
+      content = JSON.stringify([{ id: 1, name: 'Alice', role: 'Engineer' }], null, 2);
       type = 'application/json';
     } else if (tool.category === 'images') {
-      filename = `sample_photo.${tool.fromFormat.toLowerCase() === 'image' ? 'jpg' : tool.fromFormat.toLowerCase()}`;
-      // Create a small colored canvas image blob
+      filename = `sample_photo.jpg`;
       const canvas = document.createElement('canvas');
       canvas.width = 300;
       canvas.height = 300;
@@ -193,7 +220,7 @@ export default function App() {
       }
       canvas.toBlob((blob) => {
         if (blob) {
-          const sampleFile = new File([blob], filename, { type: 'image/png' });
+          const sampleFile = new File([blob], filename, { type: 'image/jpeg' });
           handleFilesAdded([sampleFile]);
         }
       });

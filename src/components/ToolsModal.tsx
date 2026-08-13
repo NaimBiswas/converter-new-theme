@@ -20,10 +20,11 @@ export const ToolsModal: React.FC<ToolsModalProps> = ({
 
   const categories: { id: ToolCategory; label: string }[] = [
     { id: 'all', label: 'All Tools' },
-    { id: 'documents', label: 'Documents' },
+    { id: 'data', label: 'Data' },
+    { id: 'spreadsheet', label: 'Spreadsheet' },
     { id: 'images', label: 'Images' },
-    { id: 'data', label: 'Data & Sheets' },
-    { id: 'code', label: 'Code & Web' },
+    { id: 'pdf', label: 'PDF Tools' },
+    { id: 'devtools', label: 'Developer Tools' },
   ];
 
   const filteredTools = ALL_TOOLS.filter((tool) => {

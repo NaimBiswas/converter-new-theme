@@ -11,12 +11,12 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onSelectTool }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const categories: { id: ToolCategory; label: string; icon: string }[] = [
-    { id: 'all', label: 'All 50+ Tools', icon: 'grid_view' },
-    { id: 'documents', label: 'Documents', icon: 'description' },
-    { id: 'images', label: 'Images & Media', icon: 'image' },
-    { id: 'data', label: 'Data & Spreadsheets', icon: 'table_view' },
-    { id: 'code', label: 'Developer Code', icon: 'code' },
-    { id: 'text', label: 'Text & Formats', icon: 'text_snippet' },
+    { id: 'all', label: 'All Tools', icon: 'grid_view' },
+    { id: 'data', label: 'Data', icon: 'data_object' },
+    { id: 'spreadsheet', label: 'Spreadsheet', icon: 'grid_on' },
+    { id: 'images', label: 'Images', icon: 'image' },
+    { id: 'pdf', label: 'PDF Tools', icon: 'picture_as_pdf' },
+    { id: 'devtools', label: 'Developer Tools', icon: 'terminal' },
   ];
 
   const filteredTools = ALL_TOOLS.filter((tool) => {
