@@ -1,16 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ConversionTool } from '../types';
 import { ConversionStatsWidget } from './ConversionStatsWidget';
 
 interface PopularToolsProps {
   tools: ConversionTool[];
-  onOpenToolsModal: () => void;
   onSelectTool: (tool: ConversionTool) => void;
 }
 
 export const PopularTools: React.FC<PopularToolsProps> = ({
   tools,
-  onOpenToolsModal,
   onSelectTool,
 }) => {
   return (
@@ -29,15 +28,15 @@ export const PopularTools: React.FC<PopularToolsProps> = ({
               The most frequently used conversion paths.
             </p>
           </div>
-          <button
-            onClick={onOpenToolsModal}
+          <Link
+            to="/tools"
             className="hidden md:flex font-semibold text-sm text-[#0058be] dark:text-[#38bdf8] items-center gap-1 hover:underline cursor-pointer group"
           >
             View all tools
             <span className="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">
               arrow_forward
             </span>
-          </button>
+          </Link>
         </div>
 
         {/* Tools Cards Grid */}
@@ -85,14 +84,15 @@ export const PopularTools: React.FC<PopularToolsProps> = ({
         </div>
 
         {/* Mobile View All Button */}
-        <button
-          onClick={onOpenToolsModal}
+        <Link
+          to="/tools"
           className="md:hidden mt-8 font-semibold text-sm text-[#0058be] dark:text-[#38bdf8] flex items-center justify-center gap-2 w-full p-3 border border-[#0058be] dark:border-[#38bdf8] rounded-full hover:bg-[#d8e2ff]/30 dark:hover:bg-[#1e293b] transition-colors cursor-pointer"
         >
           View all tools
-        </button>
+        </Link>
       </div>
     </section>
   );
 };
+
 

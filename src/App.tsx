@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Header, PageView } from './components/Header';
+import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { Header } from './components/Header';
 import { HeroDropzone } from './components/HeroDropzone';
 import { ActiveConverter } from './components/ActiveConverter';
 import { HowItWorks } from './components/HowItWorks';
@@ -26,14 +27,22 @@ import { ConversionTool, UploadedFileItem } from './types';
 import { convertSingleFile, getAvailableTargetFormats } from './utils/converter';
 import * as XLSX from 'xlsx';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 export default function App() {
+  const navigate = useNavigate();
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem('theme');
     if (saved === 'dark' || saved === 'light') return saved;
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
 
-  const [activePage, setActivePage] = useState<PageView>('converter');
   const [files, setFiles] = useState<UploadedFileItem[]>([]);
   const [isToolsOpen, setIsToolsOpen] = useState(false);
   const [isPricingOpen, setIsPricingOpen] = useState(false);
@@ -88,7 +97,7 @@ export default function App() {
 
     setFiles((prev) => [...prev, ...newItems]);
     showToast(`Added ${newItems.length} file(s) to workplace`);
-    setActivePage('converter');
+    navigate('/');
 
     // Smooth scroll down to workspace
     setTimeout(() => {
@@ -237,18 +246,10 @@ export default function App() {
     handleFilesAdded([sampleFile]);
   };
 
-  const scrollToHowItWorks = () => {
-    if (activePage !== 'converter') {
-      setActivePage('converter');
-    }
-    setTimeout(() => {
-      const el = document.getElementById('how-it-works');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
-  };
-
   return (
     <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0b0e14] text-[#191c1d] dark:text-[#e1e3e4] flex flex-col font-sans antialiased transition-colors duration-200">
+      <ScrollToTop />
+
       {/* Toast Notification Banner */}
       {toastMessage && (
         <div className="fixed top-24 right-6 z-50 bg-[#191c1d] dark:bg-[#1e293b] text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4 border border-transparent dark:border-[#334155]">
@@ -260,72 +261,71 @@ export default function App() {
       {/* Header */}
       <Header
         theme={theme}
-        activePage={activePage}
-        onSelectPage={setActivePage}
         onToggleTheme={toggleTheme}
         onOpenAuthModal={() => setIsAuthOpen(true)}
       />
 
-      {/* Main Content Area based on activePage */}
+      {/* Main Content Area handled by Router */}
       <main className="flex-1">
-        {activePage === 'converter' && (
-          <>
-            {/* Hero & Upload Dropzone */}
-            <HeroDropzone onFilesSelected={handleFilesAdded} />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                {/* Hero & Upload Dropzone */}
+                <HeroDropzone onFilesSelected={handleFilesAdded} />
 
-            {/* Active Conversion Workplace */}
-            <div id="conversion-workplace">
-              <ActiveConverter
-                files={files}
-                onUpdateTargetFormat={handleUpdateTargetFormat}
-                onConvertFile={handleConvertFile}
-                onConvertAll={handleConvertAll}
-                onRemoveFile={handleRemoveFile}
-                onAddMore={() => {
-                  const input = document.createElement('input');
-                  input.type = 'file';
-                  input.multiple = true;
-                  input.onchange = (e: any) => {
-                    if (e.target.files) handleFilesAdded(e.target.files);
-                  };
-                  input.click();
-                }}
-                onClearAll={handleClearAll}
-              />
-            </div>
+                {/* Active Conversion Workplace */}
+                <div id="conversion-workplace">
+                  <ActiveConverter
+                    files={files}
+                    onUpdateTargetFormat={handleUpdateTargetFormat}
+                    onConvertFile={handleConvertFile}
+                    onConvertAll={handleConvertAll}
+                    onRemoveFile={handleRemoveFile}
+                    onAddMore={() => {
+                      const input = document.createElement('input');
+                      input.type = 'file';
+                      input.multiple = true;
+                      input.onchange = (e: any) => {
+                        if (e.target.files) handleFilesAdded(e.target.files);
+                      };
+                      input.click();
+                    }}
+                    onClearAll={handleClearAll}
+                  />
+                </div>
 
-            {/* How It Works Section */}
-            <HowItWorks />
+                {/* How It Works Section */}
+                <HowItWorks />
 
-            {/* Popular Tools Section */}
-            <PopularTools
-              tools={POPULAR_TOOLS}
-              onOpenToolsModal={() => setActivePage('tools')}
-              onSelectTool={handleSelectTool}
-            />
-          </>
-        )}
-
-        {activePage === 'tools' && <ToolsPage onSelectTool={handleSelectTool} />}
-
-        {activePage === 'api' && <ApiPage />}
-
-        {activePage === 'pricing' && <PricingPage />}
-
-        {activePage === 'docs' && <DocsPage />}
-
-        {activePage === 'privacy' && <PrivacyPage onNavigateToContact={() => setActivePage('contact')} />}
-
-        {activePage === 'terms' && <TermsPage onNavigateToContact={() => setActivePage('contact')} />}
-
-        {activePage === 'help' && (
-          <HelpPage
-            onNavigateToContact={() => setActivePage('contact')}
-            onNavigateToApi={() => setActivePage('api')}
+                {/* Popular Tools Section */}
+                <PopularTools
+                  tools={POPULAR_TOOLS}
+                  onSelectTool={handleSelectTool}
+                />
+              </>
+            }
           />
-        )}
 
-        {activePage === 'contact' && <ContactPage />}
+          <Route path="/tools" element={<ToolsPage onSelectTool={handleSelectTool} />} />
+          <Route path="/api" element={<ApiPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/docs" element={<DocsPage />} />
+          <Route path="/privacy" element={<PrivacyPage onNavigateToContact={() => navigate('/contact')} />} />
+          <Route path="/terms" element={<TermsPage onNavigateToContact={() => navigate('/contact')} />} />
+          <Route
+            path="/help"
+            element={
+              <HelpPage
+                onNavigateToContact={() => navigate('/contact')}
+                onNavigateToApi={() => navigate('/api')}
+              />
+            }
+          />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
 
       {/* Quick Modals */}
@@ -356,13 +356,8 @@ export default function App() {
       <WhyDataConverter />
 
       {/* Footer */}
-      <Footer
-        onSelectPage={setActivePage}
-        onOpenToolsModal={() => setActivePage('tools')}
-        onOpenPricingModal={() => setActivePage('pricing')}
-        onOpenApiModal={() => setActivePage('api')}
-        onScrollToHowItWorks={scrollToHowItWorks}
-      />
+      <Footer />
     </div>
   );
 }
+
