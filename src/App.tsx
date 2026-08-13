@@ -15,6 +15,10 @@ import { ToolsPage } from './components/pages/ToolsPage';
 import { ApiPage } from './components/pages/ApiPage';
 import { PricingPage } from './components/pages/PricingPage';
 import { DocsPage } from './components/pages/DocsPage';
+import { PrivacyPage } from './components/pages/PrivacyPage';
+import { TermsPage } from './components/pages/TermsPage';
+import { HelpPage } from './components/pages/HelpPage';
+import { ContactPage } from './components/pages/ContactPage';
 
 import { POPULAR_TOOLS } from './data/tools';
 import { ConversionTool, UploadedFileItem } from './types';
@@ -308,6 +312,19 @@ export default function App() {
         {activePage === 'pricing' && <PricingPage />}
 
         {activePage === 'docs' && <DocsPage />}
+
+        {activePage === 'privacy' && <PrivacyPage onNavigateToContact={() => setActivePage('contact')} />}
+
+        {activePage === 'terms' && <TermsPage onNavigateToContact={() => setActivePage('contact')} />}
+
+        {activePage === 'help' && (
+          <HelpPage
+            onNavigateToContact={() => setActivePage('contact')}
+            onNavigateToApi={() => setActivePage('api')}
+          />
+        )}
+
+        {activePage === 'contact' && <ContactPage />}
       </main>
 
       {/* Quick Modals */}
@@ -336,6 +353,7 @@ export default function App() {
 
       {/* Footer */}
       <Footer
+        onSelectPage={setActivePage}
         onOpenToolsModal={() => setActivePage('tools')}
         onOpenPricingModal={() => setActivePage('pricing')}
         onOpenApiModal={() => setActivePage('api')}

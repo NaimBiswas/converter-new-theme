@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type PageView = 'converter' | 'tools' | 'api' | 'pricing' | 'docs';
+export type PageView = 'converter' | 'tools' | 'api' | 'pricing' | 'docs' | 'privacy' | 'terms' | 'help' | 'contact';
 
 interface HeaderProps {
   theme: 'light' | 'dark';

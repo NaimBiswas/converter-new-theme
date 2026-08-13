@@ -1,6 +1,8 @@
 import React from 'react';
+import { PageView } from './Header';
 
 interface FooterProps {
+  onSelectPage: (page: PageView) => void;
   onOpenToolsModal: () => void;
   onOpenPricingModal: () => void;
   onOpenApiModal: () => void;
@@ -8,6 +10,7 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({
+  onSelectPage,
   onOpenToolsModal,
   onOpenPricingModal,
   onOpenApiModal,
@@ -18,7 +21,10 @@ export const Footer: React.FC<FooterProps> = ({
       {/* Brand & Copyright */}
       <div className="flex flex-col items-center md:items-start gap-1">
         <div 
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={() => {
+            onSelectPage('converter');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
           className="flex items-center gap-2.5 cursor-pointer group"
         >
           <div className="w-8 h-8 rounded-lg bg-[#d8e2ff] dark:bg-[#1e293b] flex items-center justify-center text-[#0058be] dark:text-[#38bdf8] group-hover:rotate-180 transition-transform duration-500 shadow-xs">
@@ -37,16 +43,16 @@ export const Footer: React.FC<FooterProps> = ({
 
       {/* Nav Links */}
       <nav className="flex flex-wrap justify-center gap-6 text-sm text-[#424754] dark:text-[#94a3b8]">
-        <button onClick={onOpenToolsModal} className="hover:text-[#0058be] dark:hover:text-[#38bdf8] transition-colors cursor-pointer">
+        <button onClick={() => { onSelectPage('privacy'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-[#0058be] dark:hover:text-[#38bdf8] transition-colors cursor-pointer">
           Privacy Policy
         </button>
-        <button onClick={onOpenToolsModal} className="hover:text-[#0058be] dark:hover:text-[#38bdf8] transition-colors cursor-pointer">
+        <button onClick={() => { onSelectPage('terms'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-[#0058be] dark:hover:text-[#38bdf8] transition-colors cursor-pointer">
           Terms of Service
         </button>
-        <button onClick={onScrollToHowItWorks} className="hover:text-[#0058be] dark:hover:text-[#38bdf8] transition-colors cursor-pointer">
+        <button onClick={() => { onSelectPage('help'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-[#0058be] dark:hover:text-[#38bdf8] transition-colors cursor-pointer">
           Help Center
         </button>
-        <button onClick={onOpenApiModal} className="hover:text-[#0058be] dark:hover:text-[#38bdf8] transition-colors cursor-pointer">
+        <button onClick={() => { onSelectPage('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-[#0058be] dark:hover:text-[#38bdf8] transition-colors cursor-pointer">
           Contact Us
         </button>
         <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#0058be] dark:hover:text-[#38bdf8] transition-colors">
