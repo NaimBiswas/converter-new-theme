@@ -21,7 +21,7 @@ export const HelpPage: React.FC<{ onNavigateToContact?: () => void; onNavigateTo
       category: 'general',
       question: 'How does in-browser file conversion work?',
       answer:
-        'Data Converter processes your files locally using standard Web APIs, WebAssembly, and Canvas rendering engines inside your web browser. This means your files are transformed on your device without ever being uploaded to remote cloud servers.',
+        'Data Converter processes your files locally using standard Web APIs and Canvas rendering engines inside your web browser. This means your files are transformed on your device without ever being uploaded to remote cloud servers.',
     },
     {
       id: 'faq-2',

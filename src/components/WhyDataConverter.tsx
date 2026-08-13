@@ -13,7 +13,7 @@ export const WhyDataConverter: React.FC = () => {
     {
       icon: 'security',
       title: '100% Private & Browser Native',
-      description: 'Your files are processed locally in your browser memory using HTML5 and WebAssembly. Nothing is ever uploaded to external servers.',
+      description: 'Your files are processed locally in your browser memory using HTML5 JavaScript and the Canvas API. Nothing is ever uploaded to external servers.',
       badge: 'Zero Cloud Uploads',
       badgeColorClass: 'bg-[#6cf8bb] text-[#00714d] dark:bg-[#064e3b] dark:text-[#6ee7b7]',
     },

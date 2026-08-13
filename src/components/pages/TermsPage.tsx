@@ -83,7 +83,7 @@ export const TermsPage: React.FC<{ onNavigateToContact?: () => void }> = ({ onNa
           </h2>
           <p className="mb-2">When using Data Converter, you agree not to:</p>
           <ul className="list-disc pl-5 space-y-1 text-xs">
-            <li>Reverse-engineer or decompile client-side WebAssembly modules for unauthorized redistribution.</li>
+            <li>Reverse-engineer or decompile the client-side application code for unauthorized redistribution.</li>
             <li>Attempt to bypass API quota rate limits using distributed proxy bots.</li>
             <li>Process malware, ransomware payloads, or illegally acquired copyrighted assets.</li>
           </ul>

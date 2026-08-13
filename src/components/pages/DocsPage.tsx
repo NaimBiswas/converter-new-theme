@@ -27,7 +27,7 @@ export const DocsPage: React.FC = () => {
             Zero Cloud Storage
           </h2>
           <p className="text-xs text-[#424754] dark:text-[#94a3b8] leading-relaxed">
-            Your files are processed directly inside your browser memory using HTML5 Web API workers and WebAssembly. Your data is never uploaded to remote cloud servers.
+            Your files are processed directly inside your browser memory using HTML5 JavaScript and Web API workers. Your data is never uploaded to remote cloud servers.
           </p>
         </div>
 

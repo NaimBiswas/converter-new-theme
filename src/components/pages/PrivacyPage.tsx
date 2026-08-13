@@ -50,7 +50,7 @@ export const PrivacyPage: React.FC<{ onNavigateToContact?: () => void }> = ({ on
             1. Information We Do Not Collect
           </h2>
           <p className="mb-2">
-            Data Converter operates under a strict client-side isolation architecture. When you upload files for conversion (e.g., CSV, JSON, XML, PDF, Excel, JPG, PNG), the conversion logic executes entirely inside your browser using HTML5 JavaScript, WebAssembly, and local Canvas APIs.
+            Data Converter operates under a strict client-side isolation architecture. When you upload files for conversion (e.g., CSV, JSON, XML, PDF, Excel, JPG, PNG), the conversion logic executes entirely inside your browser using HTML5 JavaScript and local Canvas APIs.
           </p>
           <ul className="list-disc pl-5 space-y-1 text-xs">
             <li>We do not upload, transmit, or store your original files on external cloud servers.</li>
@@ -69,7 +69,6 @@ export const PrivacyPage: React.FC<{ onNavigateToContact?: () => void }> = ({ on
           </p>
           <ul className="list-disc pl-5 space-y-1 text-xs">
             <li>Dark mode vs Light mode visual theme preference.</li>
-            <li>Local UI state for selected tool categories.</li>
           </ul>
           <p className="mt-2 text-xs">
             Clearing your browser cache or site data completely removes these saved local preferences.
