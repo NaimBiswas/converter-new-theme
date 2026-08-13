@@ -18,11 +18,11 @@ export const ApiModal: React.FC<ApiModalProps> = ({ isOpen, onClose }) => {
   };
 
   const codeSnippets = {
-    curl: `curl -X POST "https://api.dataconverter.app/v1/convert" \\
+    curl: `curl -X POST "https://api.metadataconverter.com/v1/convert" \\
   -H "Authorization: Bearer ${apiKey}" \\
   -F "file=@/path/to/document.pdf" \\
   -F "target_format=docx"`,
-    js: `const response = await fetch("https://api.dataconverter.app/v1/convert", {
+    js: `const response = await fetch("https://api.metadataconverter.com/v1/convert", {
   method: "POST",
   headers: {
     "Authorization": "Bearer ${apiKey}"
@@ -36,7 +36,7 @@ headers = {"Authorization": "Bearer ${apiKey}"}
 files = {"file": open("document.pdf", "rb")}
 data = {"target_format": "docx"}
 
-response = requests.post("https://api.dataconverter.app/v1/convert", headers=headers, files=files, data=data)
+response = requests.post("https://api.metadataconverter.com/v1/convert", headers=headers, files=files, data=data)
 print(response.json())`
   };
 

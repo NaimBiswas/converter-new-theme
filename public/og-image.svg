@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0e14"/>
+      <stop offset="1" stop-color="#101c33"/>
+    </linearGradient>
+    <linearGradient id="icbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0058be"/>
+      <stop offset="1" stop-color="#0284c7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1000" cy="90" r="280" fill="#0058be" opacity="0.22"/>
+  <circle cx="140" cy="570" r="280" fill="#0284c7" opacity="0.16"/>
+  <rect x="90" y="215" width="200" height="200" rx="44" fill="url(#icbg)"/>
+  <g transform="translate(190 315) scale(0.164) translate(-480 480)">
+    <path fill="#ffffff" d="M640-40 488-192l42-42 80 80v-139H350q-26 0-43-17t-17-43v-254H80v-60h210v-139l-80 80-42-42 152-152 152 152-42 42-80-80v453h530v60H670v139l80-80 42 42L640-40Zm-30-373v-194H410v-60h200q26 0 43 17t17 43v194h-60Z"/>
+  </g>
+  <text x="330" y="300" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="bold" fill="#ffffff">Data Converter</text>
+  <text x="332" y="368" font-family="Arial, Helvetica, sans-serif" font-size="32" fill="#94a3b8">Seamless File &amp; Data Conversion</text>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="bold">
+    <rect x="330" y="420" width="92" height="56" rx="28" fill="#1e293b"/>
+    <text x="376" y="456" text-anchor="middle" fill="#7dd3fc">PDF</text>
+    <rect x="438" y="420" width="92" height="56" rx="28" fill="#1e293b"/>
+    <text x="484" y="456" text-anchor="middle" fill="#7dd3fc">JPG</text>
+    <rect x="546" y="420" width="108" height="56" rx="28" fill="#1e293b"/>
+    <text x="600" y="456" text-anchor="middle" fill="#7dd3fc">DOCX</text>
+    <rect x="670" y="420" width="92" height="56" rx="28" fill="#1e293b"/>
+    <text x="716" y="456" text-anchor="middle" fill="#7dd3fc">CSV</text>
+    <text x="800" y="457" text-anchor="middle" fill="#94a3b8">+30 more</text>
+  </g>
+  <text x="90" y="585" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#64748b">metadataconverter.com</text>
+</svg>

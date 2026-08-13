@@ -1,0 +1,21 @@
+{
+  "name": "Data Converter",
+  "short_name": "Data Converter",
+  "description": "Seamless file and data conversion for documents, images, spreadsheets, and code.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0e14",
+  "theme_color": "#0058be",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

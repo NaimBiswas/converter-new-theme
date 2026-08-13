@@ -18,7 +18,7 @@ export const ApiPage: React.FC = () => {
   };
 
   const snippets = {
-    curl: `curl -X POST "https://api.dataconverter.app/v1/convert" \\
+    curl: `curl -X POST "https://api.metadataconverter.com/v1/convert" \\
   -H "Authorization: Bearer ${apiKey}" \\
   -F "file=@/path/to/dataset.csv" \\
   -F "target_format=${targetFormat}"`,
@@ -27,7 +27,7 @@ export const ApiPage: React.FC = () => {
 formData.append('file', fileInput.files[0]);
 formData.append('target_format', '${targetFormat}');
 
-const response = await fetch("https://api.dataconverter.app/v1/convert", {
+const response = await fetch("https://api.metadataconverter.com/v1/convert", {
   method: "POST",
   headers: {
     "Authorization": "Bearer ${apiKey}"
@@ -45,7 +45,7 @@ files = {"file": open("dataset.csv", "rb")}
 data = {"target_format": "${targetFormat}"}
 
 response = requests.post(
-    "https://api.dataconverter.app/v1/convert",
+    "https://api.metadataconverter.com/v1/convert",
     headers=headers,
     files=files,
     data=data
@@ -61,7 +61,7 @@ import (
 )
 
 func main() {
-	req, _ := http.NewRequest("POST", "https://api.dataconverter.app/v1/convert", nil)
+	req, _ := http.NewRequest("POST", "https://api.metadataconverter.com/v1/convert", nil)
 	req.Header.Add("Authorization", "Bearer ${apiKey}")
 	// Execute HTTP request
 	fmt.Println("Converting dataset programmatically...")
@@ -69,7 +69,7 @@ func main() {
 
     php: `<?php
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "https://api.dataconverter.app/v1/convert");
+curl_setopt($ch, CURLOPT_URL, "https://api.metadataconverter.com/v1/convert");
 curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer ${apiKey}"]);
 curl_setopt($ch, CURLOPT_POST, true);
 $response = curl_exec($ch);
