@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://metadataconverter.com/sitemap.xml
+Sitemap: https://www.metadataconverter.com/sitemap.xml

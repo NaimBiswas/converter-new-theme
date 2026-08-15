@@ -1,4 +1,4 @@
-const SITE_URL = 'https://metadataconverter.com';
+const SITE_URL = 'https://www.metadataconverter.com';
 
 interface PageMeta {
   title: string;
