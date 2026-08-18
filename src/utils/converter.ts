@@ -187,9 +187,11 @@ export async function convertSingleFile(
       newExt = 'yaml';
     } else if (targetFormat === 'EXCEL' || targetFormat === 'XLSX') {
       try {
-        const jsonArr = JSON.parse(fileText);
-        const dataArr = Array.isArray(jsonArr) ? jsonArr : [jsonArr];
-        const ws = XLSX.utils.json_to_sheet(dataArr);
+        const jsonData = JSON.parse(fileText);
+        const rows: Record<string, unknown>[] = [];
+        flattenJsonToRows(jsonData, rows, {});
+        const headers = Array.from(new Set(rows.flatMap((r) => Object.keys(r))));
+        const ws = XLSX.utils.json_to_sheet(rows, { header: headers });
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
         const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
