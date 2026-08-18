@@ -515,13 +515,15 @@ function csvToJson(csv: string): string {
 function jsonToCsv(jsonStr: string): string {
   try {
     const data = JSON.parse(jsonStr);
-    const array = Array.isArray(data) ? data : [data];
-    if (array.length === 0) return '';
+    const rows: Record<string, unknown>[] = [];
+    flattenJsonToRows(data, rows, {});
 
-    const headers = Object.keys(array[0]);
+    if (rows.length === 0) return '';
+
+    const headers = Array.from(new Set(rows.flatMap((r) => Object.keys(r))));
     const csvRows = [headers.join(',')];
 
-    for (const row of array) {
+    for (const row of rows) {
       const values = headers.map((header) => {
         const val = row[header];
         const escaped = ('' + (val ?? '')).replace(/"/g, '\\"');
@@ -534,6 +536,50 @@ function jsonToCsv(jsonStr: string): string {
   } catch {
     return 'col1,col2,col3\nvalue1,value2,value3';
   }
+}
+
+/**
+ * Recursively flattens arbitrary JSON (nested objects/arrays) into CSV-ready rows.
+ * Keys that wrap nested data become leading grouping columns; arrays expand into
+ * one row per element (e.g. "F-052 Equipment List" / "2763" / serverFileName).
+ */
+function flattenJsonToRows(
+  node: unknown,
+  rows: Record<string, unknown>[],
+  groups: Record<string, unknown>
+): void {
+  if (Array.isArray(node)) {
+    if (node.length === 0) {
+      rows.push({ ...groups });
+      return;
+    }
+    for (const item of node) {
+      flattenJsonToRows(item, rows, { ...groups });
+    }
+    return;
+  }
+
+  if (node !== null && typeof node === 'object') {
+    const entries = Object.entries(node as Record<string, unknown>);
+    if (entries.length === 0) {
+      rows.push({ ...groups });
+      return;
+    }
+
+    const isLeaf = entries.every(([, v]) => v === null || typeof v !== 'object');
+    if (isLeaf) {
+      rows.push({ ...groups, ...(node as Record<string, unknown>) });
+      return;
+    }
+
+    const nextGroupKey = `group${Object.keys(groups).length + 1}`;
+    for (const [key, value] of entries) {
+      flattenJsonToRows(value, rows, { ...groups, [nextGroupKey]: key });
+    }
+    return;
+  }
+
+  rows.push({ ...groups, value: node });
 }
 
 function csvToXml(csv: string): string {
