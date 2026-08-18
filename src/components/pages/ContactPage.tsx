@@ -8,16 +8,30 @@ export const ContactPage: React.FC = () => {
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !message) return;
 
+    setError('');
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const res = await fetch('/api/send-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, category, subject, message }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to send message. Please try again.');
+      }
       setSubmitted(true);
-    }, 800);
+    } catch (err: any) {
+      setError(err.message || 'Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -95,6 +109,7 @@ export const ContactPage: React.FC = () => {
                 <button
                   onClick={() => {
                     setSubmitted(false);
+                    setError('');
                     setName('');
                     setEmail('');
                     setSubject('');
@@ -186,6 +201,13 @@ export const ContactPage: React.FC = () => {
                     className="w-full px-4 py-3 rounded-xl bg-[#f8f9fa] dark:bg-[#1e293b] border border-[#e1e3e4] dark:border-[#334155] text-sm text-[#191c1d] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0058be] transition-all"
                   ></textarea>
                 </div>
+
+                {error && (
+                  <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-[#ffdad6] dark:bg-[#7f1d1d]/30 border border-[#fca5a5] dark:border-[#7f1d1d] text-[#ba1a1a] dark:text-[#fca5a5] text-xs font-semibold">
+                    <span className="material-symbols-outlined text-base">error</span>
+                    {error}
+                  </div>
+                )}
 
                 <button
                   type="submit"
